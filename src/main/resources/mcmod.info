@@ -1,0 +1,17 @@
+[
+  {
+    "modid": "jeiautos",
+    "name": "JEI Autos",
+    "description": "Informs JEI of certain dynamic recipes.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "logoFile": "",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["Eutros"],
+    "parent": "",
+    "screenshots": [],
+    "dependencies": [],
+    "requiredMods": ["jei"]
+  }
+]
