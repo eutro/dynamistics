@@ -1,4 +1,4 @@
-package categories.pauto.processing;
+package jei.categories.pauto.processing;
 
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
@@ -46,32 +46,39 @@ public abstract class PackageRecipeProvider implements IRecipeWrapper {
                 (recipeWidth - mc.fontRenderer.getStringWidth(locName)) / 2,
                 16,
                 0xFF000000);
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(recipeWidth / 2.0 - 16, recipeHeight / 2.0 - 16, 0);
+        GlStateManager.scale(2, 2, 2);
+        drawRep(mc, recipeType);
+        GlStateManager.popMatrix();
+    }
 
+    public void drawRep(@Nonnull Minecraft mc, IRecipeType recipeType) {
         // this is the implementation used by PAuto in GuiEncoder
         Object rep = recipeType.getRepresentation();
 
         if(rep instanceof TextureAtlasSprite) {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-            this.drawTexturedModalRect(recipeWidth / 2 - 8, recipeHeight / 2 - 8, (TextureAtlasSprite) rep, 16, 16);
+            this.drawTexturedModalRect((TextureAtlasSprite) rep);
         }
 
         if(rep instanceof ItemStack) {
             RenderHelper.enableGUIStandardItemLighting();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            mc.getRenderItem().renderItemIntoGUI((ItemStack) rep, recipeWidth / 2 - 8, recipeHeight / 2 - 8);
+            mc.getRenderItem().renderItemIntoGUI((ItemStack) rep, 0, 0);
             RenderHelper.disableStandardItemLighting();
         }
     }
 
-    public void drawTexturedModalRect(int x, int y, TextureAtlasSprite textureSprite, int width, int height) {
+    public void drawTexturedModalRect(TextureAtlasSprite textureSprite) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        bufferbuilder.pos(x, y + height, 0).tex(textureSprite.getMinU(), textureSprite.getMaxV()).endVertex();
-        bufferbuilder.pos(x + width, y + height, 0).tex(textureSprite.getMaxU(), textureSprite.getMaxV()).endVertex();
-        bufferbuilder.pos(x + width, y, 0).tex(textureSprite.getMaxU(), textureSprite.getMinV()).endVertex();
-        bufferbuilder.pos(x, y, 0).tex(textureSprite.getMinU(), textureSprite.getMinV()).endVertex();
+        bufferbuilder.pos(0, 16, 0).tex(textureSprite.getMinU(), textureSprite.getMaxV()).endVertex();
+        bufferbuilder.pos(16, 16, 0).tex(textureSprite.getMaxU(), textureSprite.getMaxV()).endVertex();
+        bufferbuilder.pos(16, 0, 0).tex(textureSprite.getMaxU(), textureSprite.getMinV()).endVertex();
+        bufferbuilder.pos(0, 0, 0).tex(textureSprite.getMinU(), textureSprite.getMinV()).endVertex();
         tessellator.draw();
     }
 

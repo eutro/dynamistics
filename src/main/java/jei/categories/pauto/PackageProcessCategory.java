@@ -1,6 +1,6 @@
-package categories.pauto;
+package jei.categories.pauto;
 
-import categories.pauto.processing.PackageRecipeProvider;
+import jei.categories.pauto.processing.PackageRecipeProvider;
 import helper.JeiHelper;
 import helper.ModIds;
 import mezz.jei.api.IGuiHelper;
@@ -12,6 +12,7 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PackageProcess implements IRecipeCategory<PackageRecipeProvider> {
+public class PackageProcessCategory implements IRecipeCategory<PackageRecipeProvider> {
 
     public static final String UID = "jeiautos:package_process";
     private static final int HEIGHT = 98;
@@ -36,8 +37,9 @@ public class PackageProcess implements IRecipeCategory<PackageRecipeProvider> {
     private final IDrawableStatic slot;
     private final IDrawable icon;
     private final Item recipePackage;
+    private final IDrawableStatic arrow;
 
-    public PackageProcess(IJeiHelpers helpers) {
+    public PackageProcessCategory(IJeiHelpers helpers) {
         IGuiHelper guiHelper = helpers.getGuiHelper();
 
         recipePackage = Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModIds.PAUTO, "package")));
@@ -45,6 +47,12 @@ public class PackageProcess implements IRecipeCategory<PackageRecipeProvider> {
         slot = guiHelper.getSlotDrawable();
         background = guiHelper.createBlankDrawable(WIDTH, HEIGHT);
         icon = guiHelper.createDrawableIngredient(new ItemStack(recipePackage));
+
+        arrow = guiHelper.createDrawable(new ResourceLocation(ModIds.SELF, "textures/gui/arrows.png"),
+                0,
+                32,
+                64,
+                64);
     }
 
     @Nonnull
@@ -75,6 +83,13 @@ public class PackageProcess implements IRecipeCategory<PackageRecipeProvider> {
     @Override
     public IDrawable getIcon() {
         return icon;
+    }
+
+    @Override
+    public void drawExtras(@Nonnull Minecraft minecraft) {
+        arrow.draw(minecraft,
+                (WIDTH - arrow.getWidth()) / 2,
+                (HEIGHT - arrow.getHeight()) / 2);
     }
 
     @Override

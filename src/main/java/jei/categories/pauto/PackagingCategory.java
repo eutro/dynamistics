@@ -1,10 +1,7 @@
-package categories.pauto;
+package jei.categories.pauto;
 
 import mezz.jei.api.IJeiHelpers;
-import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.Item;
 
 import javax.annotation.Nonnull;
 
@@ -32,19 +29,6 @@ public class PackagingCategory extends UnpackagingCategory {
     @Override
     public String getTitle() {
         return I18n.format("jeiautos.category.title.pauto.package");
-    }
-
-    public static class Recipe extends UnpackagingCategory.Recipe {
-
-        public Recipe(Item item) {
-            super(item);
-        }
-
-        @Override
-        public void getIngredients(IIngredients ingredients) {
-            ingredients.setOutput(VanillaTypes.ITEM, stack);
-        }
-
     }
 
 }

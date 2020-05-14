@@ -1,10 +1,12 @@
-import categories.ae2.PatternCategory;
-import categories.pauto.PackageProcess;
-import categories.pauto.PackagingCategory;
-import categories.pauto.UnpackagingCategory;
-import categories.pauto.processing.PackageProcessingRecipe;
-import categories.pauto.processing.RecipeHolderProcessingRecipe;
 import helper.ModIds;
+import jei.SingletonRecipe;
+import jei.categories.ae2.PatternCategory;
+import jei.categories.pauto.HolderCategory;
+import jei.categories.pauto.PackageProcessCategory;
+import jei.categories.pauto.PackagingCategory;
+import jei.categories.pauto.UnpackagingCategory;
+import jei.categories.pauto.processing.PackageProcessingRecipe;
+import jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.Item;
@@ -36,9 +38,12 @@ public class JeiAutosJEIPlugin implements IModPlugin {
         }
 
         if(Loader.isModLoaded(ModIds.PAUTO)) {
-            registry.addRecipeCategories(new UnpackagingCategory(helpers),
-                    new PackagingCategory(helpers),
-                    new PackageProcess(helpers));
+            registry.addRecipeCategories(
+                    new PackageProcessCategory(helpers),
+                    new HolderCategory(helpers),
+                    new UnpackagingCategory(helpers),
+                    new PackagingCategory(helpers)
+            );
         }
     }
 
@@ -70,14 +75,14 @@ public class JeiAutosJEIPlugin implements IModPlugin {
             Item recipeHolder = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModIds.PAUTO, "recipe_holder"));
 
             registry.addRecipes(Collections.singletonList(new PackageProcessingRecipe(recipePackage)),
-                    PackageProcess.UID);
+                    PackageProcessCategory.UID);
 
-            registry.addRecipes(Collections.singletonList(new UnpackagingCategory.Recipe(recipePackage)),
+            registry.addRecipes(Collections.singletonList(new SingletonRecipe(recipePackage, true)),
                     UnpackagingCategory.UID);
             registry.addRecipeCatalyst(new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModIds.PAUTO, "unpackager")))),
                     UnpackagingCategory.UID);
 
-            registry.addRecipes(Collections.singletonList(new PackagingCategory.Recipe(recipePackage)),
+            registry.addRecipes(Collections.singletonList(new SingletonRecipe(recipePackage, false)),
                     PackagingCategory.UID);
             registry.addRecipeCatalyst(new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModIds.PAUTO, "packager")))),
                     PackagingCategory.UID);
@@ -85,7 +90,14 @@ public class JeiAutosJEIPlugin implements IModPlugin {
             registry.addRecipes(IntStream.range(0, 20)
                             .mapToObj(i -> new RecipeHolderProcessingRecipe(recipeHolder, i))
                             .collect(Collectors.toList()),
-                    PackageProcess.UID);
+                    PackageProcessCategory.UID);
+
+            registry.addRecipes(Collections.singletonList(new HolderCategory.PackageRecipe(recipePackage)),
+                    HolderCategory.UID);
+            registry.addRecipes(IntStream.range(0, 20)
+                            .mapToObj(i -> new HolderCategory.HolderRecipe(recipeHolder, i))
+                            .collect(Collectors.toList()),
+                    HolderCategory.UID);
         }
     }
 

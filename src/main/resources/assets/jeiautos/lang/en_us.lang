@@ -4,5 +4,6 @@ jeiautos.category.title.ae2.pattern.processing=Processing Pattern
 jeiautos.category.title.pauto.unpackage=Unpackaging
 jeiautos.category.title.pauto.package=Packaging
 jeiautos.category.title.pauto.process=Package Processing
+jeiautos.category.title.pauto.holder=Packaged Recipe
 
 jeiautos.recipe.text.package_processing_extra=Recipe %s:

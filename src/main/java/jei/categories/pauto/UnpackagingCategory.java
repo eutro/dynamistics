@@ -1,6 +1,7 @@
-package categories.pauto;
+package jei.categories.pauto;
 
 import helper.ModIds;
+import jei.SingletonRecipe;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -8,12 +9,9 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
@@ -31,7 +29,7 @@ import java.util.Objects;
 
 import static helper.JeiHelper.getFocusedStack;
 
-public class UnpackagingCategory implements IRecipeCategory<UnpackagingCategory.Recipe> {
+public class UnpackagingCategory implements IRecipeCategory<SingletonRecipe> {
 
     public static final String UID = "jeiautos:unpackaging";
     private static final int HEIGHT = 126;
@@ -48,7 +46,7 @@ public class UnpackagingCategory implements IRecipeCategory<UnpackagingCategory.
 
         slot = guiHelper.getSlotDrawable();
         background = guiHelper.createBlankDrawable(WIDTH, HEIGHT);
-        icon = guiHelper.createDrawableIngredient(new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModIds.PAUTO, "package")))));
+        icon = guiHelper.createDrawableIngredient(new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModIds.PAUTO, (isUnpackaging() ? "un" : "") + "packager")))));
         gridStartY = HEIGHT - (int) (3.5 * GRID_SIZE);
         arrow = guiHelper.createDrawable(new ResourceLocation(ModIds.SELF, "textures/gui/arrows.png"),
                 isUnpackaging() ?
@@ -95,7 +93,7 @@ public class UnpackagingCategory implements IRecipeCategory<UnpackagingCategory.
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, @Nonnull UnpackagingCategory.Recipe recipeWrapper, @Nonnull IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, @Nonnull SingletonRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
 
         ItemStack packageStack = getFocusedStack(recipeWrapper.stack.getItem(), stacks);
@@ -147,21 +145,6 @@ public class UnpackagingCategory implements IRecipeCategory<UnpackagingCategory.
 
     protected boolean isUnpackaging() {
         return true;
-    }
-
-    public static class Recipe implements IRecipeWrapper {
-
-        protected final ItemStack stack;
-
-        public Recipe(Item item) {
-            stack = new ItemStack(item);
-        }
-
-        @Override
-        public void getIngredients(IIngredients ingredients) {
-            ingredients.setInput(VanillaTypes.ITEM, stack);
-        }
-
     }
 
 }

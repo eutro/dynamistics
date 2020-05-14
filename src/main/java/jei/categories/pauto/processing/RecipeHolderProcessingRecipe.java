@@ -1,4 +1,4 @@
-package categories.pauto.processing;
+package jei.categories.pauto.processing;
 
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
@@ -27,7 +27,11 @@ public class RecipeHolderProcessingRecipe extends PackageRecipeProvider {
     @Nonnull
     @Override
     public NBTTagCompound getPackageNBT(IGuiItemStackGroup group) {
-        ItemStack stack = getFocusedStack(this.stack.getItem(), group);
+        return getNBT(group, stack.getItem(), index);
+    }
+
+    public static NBTTagCompound getNBT(IGuiItemStackGroup group, Item item, int index) {
+        ItemStack stack = getFocusedStack(item, group);
         if(stack != null && stack.hasTagCompound()) {
             NBTTagCompound tag = stack.getTagCompound();
             if(tag == null) return new NBTTagCompound();

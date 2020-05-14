@@ -1,4 +1,4 @@
-package categories.ae2;
+package jei.categories.ae2;
 
 import helper.ModIds;
 import helper.NBTHelper;
