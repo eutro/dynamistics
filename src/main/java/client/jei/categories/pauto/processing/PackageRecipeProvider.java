@@ -1,4 +1,4 @@
-package jei.categories.pauto.processing;
+package client.jei.categories.pauto.processing;
 
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;

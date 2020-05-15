@@ -1,4 +1,4 @@
-package helper;
+package client.helper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

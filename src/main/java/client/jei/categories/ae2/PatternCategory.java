@@ -1,7 +1,7 @@
-package jei.categories.ae2;
+package client.jei.categories.ae2;
 
-import helper.ModIds;
-import helper.NBTHelper;
+import client.helper.ModIds;
+import client.helper.NBTHelper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-import static helper.JeiHelper.getFocusedStack;
+import static client.helper.JeiHelper.getFocusedStack;
 
 public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> {
 

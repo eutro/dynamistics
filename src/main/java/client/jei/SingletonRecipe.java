@@ -1,4 +1,4 @@
-package jei;
+package client.jei;
 
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;

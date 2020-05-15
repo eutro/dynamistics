@@ -1,4 +1,4 @@
-package jei.categories.pauto.processing;
+package client.jei.categories.pauto.processing;
 
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
@@ -12,7 +12,7 @@ import net.minecraft.nbt.NBTTagList;
 
 import javax.annotation.Nonnull;
 
-import static helper.JeiHelper.getFocusedStack;
+import static client.helper.JeiHelper.getFocusedStack;
 
 public class RecipeHolderProcessingRecipe extends PackageRecipeProvider {
 

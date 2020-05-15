@@ -1,4 +1,4 @@
-package helper;
+package client.helper;
 
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.recipe.IFocus;
@@ -28,7 +28,7 @@ public class JeiHelper {
                 }
             }
         } catch(IllegalAccessException | ClassCastException | IllegalArgumentException | SecurityException ignored) {
-            LOGGER.debug("Failed to obtain focus through reflection. Recipe will not show correctly.");
+            LOGGER.debug("Failed to obtain focus through reflection");
         }
         return patternStack;
     }

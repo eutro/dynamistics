@@ -1,8 +1,8 @@
-package jei.categories.pauto;
+package client.jei.categories.pauto;
 
-import jei.categories.pauto.processing.PackageRecipeProvider;
-import helper.JeiHelper;
-import helper.ModIds;
+import client.jei.categories.pauto.processing.PackageRecipeProvider;
+import client.helper.JeiHelper;
+import client.helper.ModIds;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;

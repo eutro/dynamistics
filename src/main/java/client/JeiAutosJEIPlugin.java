@@ -1,12 +1,14 @@
-import helper.ModIds;
-import jei.SingletonRecipe;
-import jei.categories.ae2.PatternCategory;
-import jei.categories.pauto.HolderCategory;
-import jei.categories.pauto.PackageProcessCategory;
-import jei.categories.pauto.PackagingCategory;
-import jei.categories.pauto.UnpackagingCategory;
-import jei.categories.pauto.processing.PackageProcessingRecipe;
-import jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
+package client;
+
+import client.helper.ModIds;
+import client.jei.SingletonRecipe;
+import client.jei.categories.ae2.PatternCategory;
+import client.jei.categories.pauto.HolderCategory;
+import client.jei.categories.pauto.PackageProcessCategory;
+import client.jei.categories.pauto.PackagingCategory;
+import client.jei.categories.pauto.UnpackagingCategory;
+import client.jei.categories.pauto.processing.PackageProcessingRecipe;
+import client.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.Item;
@@ -24,6 +26,8 @@ import java.util.stream.IntStream;
 
 @JEIPlugin
 public class JeiAutosJEIPlugin implements IModPlugin {
+
+    public static IJeiRuntime runtime;
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
@@ -119,6 +123,11 @@ public class JeiAutosJEIPlugin implements IModPlugin {
                 });
             }
         }
+    }
+
+    @Override
+    public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {
+        runtime = jeiRuntime;
     }
 
 }

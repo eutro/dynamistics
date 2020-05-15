@@ -1,3 +1,5 @@
+package client;
+
 import net.minecraftforge.fml.common.Mod;
 
 @Mod(modid = JeiAutos.MOD_ID,

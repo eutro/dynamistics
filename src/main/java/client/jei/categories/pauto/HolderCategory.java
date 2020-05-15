@@ -1,10 +1,11 @@
-package jei.categories.pauto;
+package client.jei.categories.pauto;
 
-import helper.JeiHelper;
-import helper.ModIds;
-import it.unimi.dsi.fastutil.ints.IntSet;
-import jei.categories.pauto.processing.PackageRecipeProvider;
-import jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
+import client.JeiAutosJEIPlugin;
+import client.helper.JeiHelper;
+import client.helper.ModIds;
+import client.jei.categories.pauto.processing.PackageRecipeProvider;
+import client.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -15,16 +16,15 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import thelm.packagedauto.api.IRecipeInfo;
 import thelm.packagedauto.api.IRecipeType;
@@ -33,8 +33,8 @@ import thelm.packagedauto.api.RecipeTypeRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
 
@@ -100,6 +100,12 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
         NonNullList<ItemStack> input = NonNullList.withSize(81, ItemStack.EMPTY);
         NonNullList<ItemStack> output = NonNullList.withSize(9, ItemStack.EMPTY);
 
+        ArrayList<IDrawable> bgList = new ArrayList<>();
+
+        for(int i = 0; i < 90; i++) {
+            bgList.add(slot);
+        }
+
         recipeType:
         {
             NBTTagCompound tag = recipeWrapper.getPackageNBT(stacks);
@@ -112,35 +118,32 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
 
             recipeWrapper.setInfo(info);
 
-            Iterator<ItemStack> inputs = info.getInputs().iterator();
-            Iterator<ItemStack> outputs = info.getOutputs().iterator();
-
-            IntSet enabledSlots = type.getEnabledSlots();
-            for(int i = 0; i < input.size(); i++) {
-                if(enabledSlots.contains(i)) {
-                    input.set(i, inputs.next());
-                    if(!inputs.hasNext()) break;
-                }
+            for(Int2ObjectMap.Entry<ItemStack> entry : info.getEncoderStacks().int2ObjectEntrySet()) {
+                int intKey = entry.getIntKey();
+                if(intKey >= input.size()) continue;
+                input.set(intKey, entry.getValue());
             }
 
-            for(int i = 0; i < output.size(); i++) {
-                if(enabledSlots.contains(i + 81)) {
-                    output.set(i, outputs.next());
-                    if(!outputs.hasNext()) break;
-                }
+            List<ItemStack> outputs = info.getOutputs();
+            for(int i = 0; i < outputs.size(); i++) {
+                output.set(i, outputs.get(i));
+            }
+
+            for(int i = 0; i < 90; i++) {
+                bgList.set(i, new ColouredSlot(slot, type.getSlotColor(i)));
             }
         }
 
         for(int i = 0; i < input.size(); i++) {
             stacks.init(i, true, GRID_START_X + (GRID_SIZE * (i % 9)), GRID_START_Y + (GRID_SIZE * (i / 9)));
             stacks.set(i, input.get(i));
-            stacks.setBackground(i, slot);
+            stacks.setBackground(i, bgList.get(i));
         }
 
         for(int i = 0; i < output.size(); i++) {
             stacks.init(i + 81, false, GRID_START_X + (GRID_SIZE * i), OUT_GRID_START_Y);
             stacks.set(i + 81, output.get(i));
-            stacks.setBackground(i + 81, slot);
+            stacks.setBackground(i + 81, bgList.get(i + 81));
         }
     }
 
@@ -148,6 +151,44 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
     @Override
     public IDrawable getIcon() {
         return icon;
+    }
+
+    public static class ColouredSlot implements IDrawable {
+
+        private IDrawable delegate;
+        private Color color;
+
+        public ColouredSlot(IDrawable delegate, Color color) {
+            this.delegate = delegate;
+            this.color = color;
+        }
+
+        @Override
+        public int getWidth() {
+            return delegate.getWidth();
+        }
+
+        @Override
+        public int getHeight() {
+            return delegate.getHeight();
+        }
+
+        @Override
+        public void draw(@Nonnull Minecraft minecraft, int xOffset, int yOffset) {
+            delegate.draw(minecraft, xOffset, yOffset);
+            drawColor(xOffset + 1, yOffset + 1);
+        }
+
+        public void drawColor(int x, int y) {
+            GuiUtils.drawGradientRect(1,
+                    x,
+                    y,
+                    x + 16,
+                    y + 16,
+                    color.getRGB(),
+                    color.getRGB());
+        }
+
     }
 
     public static class PackageRecipe extends PackageRecipeProvider {
@@ -181,26 +222,6 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
             if(recipeInfo == null) return;
 
             IRecipeType recipeType = recipeInfo.getRecipeType();
-            int i;
-            int j;
-            Color color;
-            for(i = 0; i < 9; ++i) {
-                for(j = 0; j < 9; ++j) {
-                    color = recipeType.getSlotColor(i * 9 + j);
-                    drawColor(GRID_START_X + i * GRID_SIZE,
-                            GRID_START_Y + j * GRID_SIZE,
-                            color);
-                }
-            }
-
-            for(i = 0; i < 9; ++i) {
-                    color = recipeType.getSlotColor(81 + i);
-                    drawColor(GRID_START_X + i * GRID_SIZE,
-                            OUT_GRID_START_Y,
-                            color);
-            }
-
-            GlStateManager.color(1, 1, 1);
 
             GlStateManager.pushMatrix();
             GlStateManager.translate(REP_X, REP_Y, 0);
@@ -218,21 +239,26 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
                     mouseX > REP_X + REP_SIZE ||
                     mouseY > REP_Y + REP_SIZE) return Collections.emptyList();
 
-            return Collections.singletonList(recipeInfo.getRecipeType().getLocalizedName());
+            return Arrays.asList(recipeInfo.getRecipeType().getLocalizedName(),
+                    TextFormatting.ITALIC + I18n.format("jeiautos.recipe.text.show_jei_categories"));
         }
 
-        public static void drawColor(int x, int y, Color color) {
-            GlStateManager.color((float) color.getRed() / 255.0F, (float) color.getGreen() / 255.0F, (float) color.getBlue() / 255.0F, (float) color.getAlpha() / 255.0F);
-            float f = 1.0F / (float) 512;
-            float f1 = 1.0F / (float) 512;
-            Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
-            bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-            bufferbuilder.pos(x, y + 16, 0.0D).tex((float) 258 * f, ((float) 0 + (float) 16) * f1).endVertex();
-            bufferbuilder.pos(x + 16, y + 16, 0.0D).tex(((float) 258 + (float) 16) * f, ((float) 0 + (float) 16) * f1).endVertex();
-            bufferbuilder.pos(x + 16, y, 0.0D).tex(((float) 258 + (float) 16) * f, (float) 0 * f1).endVertex();
-            bufferbuilder.pos(x, y, 0.0D).tex((float) 258 * f, (float) 0 * f1).endVertex();
-            tessellator.draw();
+        @Override
+        public boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton) {
+            if(recipeInfo == null ||
+                    (mouseButton != 1 && mouseButton != 2) ||
+                    mouseX < REP_X ||
+                    mouseY < REP_Y ||
+                    mouseX > REP_X + REP_SIZE ||
+                    mouseY > REP_Y + REP_SIZE) return false;
+
+            List<String> categories = recipeInfo.getRecipeType().getJEICategories();
+            if(JeiAutosJEIPlugin.runtime != null && !categories.isEmpty()) {
+                JeiAutosJEIPlugin.runtime.getRecipesGui().showCategories(categories);
+                return true;
+            }
+
+            return false;
         }
 
     }

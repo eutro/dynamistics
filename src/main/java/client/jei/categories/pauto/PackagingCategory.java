@@ -1,4 +1,4 @@
-package jei.categories.pauto;
+package client.jei.categories.pauto;
 
 import mezz.jei.api.IJeiHelpers;
 import net.minecraft.client.resources.I18n;

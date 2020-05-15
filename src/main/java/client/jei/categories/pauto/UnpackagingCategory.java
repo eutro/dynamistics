@@ -1,7 +1,7 @@
-package jei.categories.pauto;
+package client.jei.categories.pauto;
 
-import helper.ModIds;
-import jei.SingletonRecipe;
+import client.helper.ModIds;
+import client.jei.SingletonRecipe;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-import static helper.JeiHelper.getFocusedStack;
+import static client.helper.JeiHelper.getFocusedStack;
 
 public class UnpackagingCategory implements IRecipeCategory<SingletonRecipe> {
 
