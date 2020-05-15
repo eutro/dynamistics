@@ -1,10 +1,10 @@
-package client.jei.categories.pauto;
+package eutros.jeiautos.jei.categories.pauto;
 
-import client.JeiAutosJEIPlugin;
-import client.helper.JeiHelper;
-import client.helper.ModIds;
-import client.jei.categories.pauto.processing.PackageRecipeProvider;
-import client.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
+import eutros.jeiautos.JeiAutosJEIPlugin;
+import eutros.jeiautos.helper.JeiHelper;
+import eutros.jeiautos.helper.ModIds;
+import eutros.jeiautos.jei.categories.pauto.processing.PackageRecipeProvider;
+import eutros.jeiautos.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;

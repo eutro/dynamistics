@@ -1,7 +1,8 @@
-package client.jei.categories.pauto;
+package eutros.jeiautos.jei.categories.pauto;
 
-import client.helper.ModIds;
-import client.jei.SingletonRecipe;
+import eutros.jeiautos.helper.ModIds;
+import eutros.jeiautos.jei.SingletonRecipe;
+import eutros.jeiautos.helper.JeiHelper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -26,8 +27,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
-
-import static client.helper.JeiHelper.getFocusedStack;
 
 public class UnpackagingCategory implements IRecipeCategory<SingletonRecipe> {
 
@@ -96,7 +95,7 @@ public class UnpackagingCategory implements IRecipeCategory<SingletonRecipe> {
     public void setRecipe(IRecipeLayout recipeLayout, @Nonnull SingletonRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
 
-        ItemStack packageStack = getFocusedStack(recipeWrapper.stack.getItem(), stacks);
+        ItemStack packageStack = JeiHelper.getFocusedStack(recipeWrapper.stack.getItem(), stacks);
 
         if(packageStack == null) {
             packageStack = recipeWrapper.stack;

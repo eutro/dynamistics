@@ -1,8 +1,8 @@
-package client.jei.categories.pauto;
+package eutros.jeiautos.jei.categories.pauto;
 
-import client.jei.categories.pauto.processing.PackageRecipeProvider;
-import client.helper.JeiHelper;
-import client.helper.ModIds;
+import eutros.jeiautos.jei.categories.pauto.processing.PackageRecipeProvider;
+import eutros.jeiautos.helper.JeiHelper;
+import eutros.jeiautos.helper.ModIds;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;

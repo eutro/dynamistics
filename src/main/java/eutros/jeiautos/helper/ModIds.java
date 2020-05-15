@@ -1,4 +1,4 @@
-package client.helper;
+package eutros.jeiautos.helper;
 
 public class ModIds {
 

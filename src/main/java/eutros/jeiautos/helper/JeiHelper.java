@@ -1,4 +1,4 @@
-package client.helper;
+package eutros.jeiautos.helper;
 
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.recipe.IFocus;

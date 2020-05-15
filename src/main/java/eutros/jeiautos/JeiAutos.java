@@ -1,4 +1,4 @@
-package client;
+package eutros.jeiautos;
 
 import net.minecraftforge.fml.common.Mod;
 

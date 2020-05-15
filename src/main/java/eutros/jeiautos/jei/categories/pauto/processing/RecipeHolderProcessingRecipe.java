@@ -1,5 +1,6 @@
-package client.jei.categories.pauto.processing;
+package eutros.jeiautos.jei.categories.pauto.processing;
 
+import eutros.jeiautos.helper.JeiHelper;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -11,8 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 import javax.annotation.Nonnull;
-
-import static client.helper.JeiHelper.getFocusedStack;
 
 public class RecipeHolderProcessingRecipe extends PackageRecipeProvider {
 
@@ -31,7 +30,7 @@ public class RecipeHolderProcessingRecipe extends PackageRecipeProvider {
     }
 
     public static NBTTagCompound getNBT(IGuiItemStackGroup group, Item item, int index) {
-        ItemStack stack = getFocusedStack(item, group);
+        ItemStack stack = JeiHelper.getFocusedStack(item, group);
         if(stack != null && stack.hasTagCompound()) {
             NBTTagCompound tag = stack.getTagCompound();
             if(tag == null) return new NBTTagCompound();

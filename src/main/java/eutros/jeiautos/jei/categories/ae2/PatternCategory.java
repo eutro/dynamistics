@@ -1,7 +1,8 @@
-package client.jei.categories.ae2;
+package eutros.jeiautos.jei.categories.ae2;
 
-import client.helper.ModIds;
-import client.helper.NBTHelper;
+import eutros.jeiautos.helper.ModIds;
+import eutros.jeiautos.helper.NBTHelper;
+import eutros.jeiautos.helper.JeiHelper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -25,8 +26,6 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-
-import static client.helper.JeiHelper.getFocusedStack;
 
 public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> {
 
@@ -112,7 +111,7 @@ public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> 
     public void setRecipe(IRecipeLayout recipeLayout, @Nonnull Recipe recipeWrapper, @Nonnull IIngredients ingredients) {
         IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
 
-        ItemStack patternStack = getFocusedStack(recipeWrapper.stack.getItem(), stacks);
+        ItemStack patternStack = JeiHelper.getFocusedStack(recipeWrapper.stack.getItem(), stacks);
 
         if(patternStack == null) {
             patternStack = ingredients.getInputs(VanillaTypes.ITEM).get(0).get(0);

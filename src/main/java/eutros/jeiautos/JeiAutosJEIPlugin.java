@@ -1,14 +1,14 @@
-package client;
+package eutros.jeiautos;
 
-import client.helper.ModIds;
-import client.jei.SingletonRecipe;
-import client.jei.categories.ae2.PatternCategory;
-import client.jei.categories.pauto.HolderCategory;
-import client.jei.categories.pauto.PackageProcessCategory;
-import client.jei.categories.pauto.PackagingCategory;
-import client.jei.categories.pauto.UnpackagingCategory;
-import client.jei.categories.pauto.processing.PackageProcessingRecipe;
-import client.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
+import eutros.jeiautos.helper.ModIds;
+import eutros.jeiautos.jei.SingletonRecipe;
+import eutros.jeiautos.jei.categories.ae2.PatternCategory;
+import eutros.jeiautos.jei.categories.pauto.HolderCategory;
+import eutros.jeiautos.jei.categories.pauto.PackageProcessCategory;
+import eutros.jeiautos.jei.categories.pauto.PackagingCategory;
+import eutros.jeiautos.jei.categories.pauto.UnpackagingCategory;
+import eutros.jeiautos.jei.categories.pauto.processing.PackageProcessingRecipe;
+import eutros.jeiautos.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.Item;
