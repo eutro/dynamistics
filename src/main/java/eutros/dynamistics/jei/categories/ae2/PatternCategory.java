@@ -1,8 +1,8 @@
-package eutros.jeiautos.jei.categories.ae2;
+package eutros.dynamistics.jei.categories.ae2;
 
-import eutros.jeiautos.helper.ModIds;
-import eutros.jeiautos.helper.NBTHelper;
-import eutros.jeiautos.helper.JeiHelper;
+import eutros.dynamistics.helper.ModIds;
+import eutros.dynamistics.helper.NBTHelper;
+import eutros.dynamistics.helper.JeiHelper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -29,7 +29,7 @@ import java.util.Objects;
 
 public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> {
 
-    public static final String UID = "jeiautos:process_pattern_";
+    public static final String UID = "dynamistics:process_pattern_";
     private static final int HEIGHT = 126;
     private static final int WIDTH = 146;
     private final IDrawableStatic background;
@@ -99,7 +99,7 @@ public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> 
     @Nonnull
     @Override
     public String getTitle() {
-        return I18n.format("jeiautos.category.title.ae2.pattern." + getTypeId(crafting, substitute));
+        return I18n.format("dynamistics.category.title.ae2.pattern." + getTypeId(crafting, substitute));
     }
 
     @Nonnull

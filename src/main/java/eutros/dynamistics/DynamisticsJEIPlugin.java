@@ -1,14 +1,14 @@
-package eutros.jeiautos;
+package eutros.dynamistics;
 
-import eutros.jeiautos.helper.ModIds;
-import eutros.jeiautos.jei.SingletonRecipe;
-import eutros.jeiautos.jei.categories.ae2.PatternCategory;
-import eutros.jeiautos.jei.categories.pauto.HolderCategory;
-import eutros.jeiautos.jei.categories.pauto.PackageProcessCategory;
-import eutros.jeiautos.jei.categories.pauto.PackagingCategory;
-import eutros.jeiautos.jei.categories.pauto.UnpackagingCategory;
-import eutros.jeiautos.jei.categories.pauto.processing.PackageProcessingRecipe;
-import eutros.jeiautos.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
+import eutros.dynamistics.helper.ModIds;
+import eutros.dynamistics.jei.SingletonRecipe;
+import eutros.dynamistics.jei.categories.ae2.PatternCategory;
+import eutros.dynamistics.jei.categories.pauto.HolderCategory;
+import eutros.dynamistics.jei.categories.pauto.PackageProcessCategory;
+import eutros.dynamistics.jei.categories.pauto.PackagingCategory;
+import eutros.dynamistics.jei.categories.pauto.UnpackagingCategory;
+import eutros.dynamistics.jei.categories.pauto.processing.PackageProcessingRecipe;
+import eutros.dynamistics.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.Item;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @JEIPlugin
-public class JeiAutosJEIPlugin implements IModPlugin {
+public class DynamisticsJEIPlugin implements IModPlugin {
 
     public static IJeiRuntime runtime;
 

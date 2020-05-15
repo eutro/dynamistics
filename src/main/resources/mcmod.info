@@ -1,7 +1,7 @@
 [
   {
-    "modid": "jeiautos",
-    "name": "JEI Autos",
+    "modid": "dynamistics",
+    "name": "Dynamistics",
     "description": "Informs JEI of certain dynamic recipes.",
     "version": "${version}",
     "mcversion": "${mcversion}",

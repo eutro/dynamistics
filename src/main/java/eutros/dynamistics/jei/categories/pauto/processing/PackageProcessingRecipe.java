@@ -1,6 +1,6 @@
-package eutros.jeiautos.jei.categories.pauto.processing;
+package eutros.dynamistics.jei.categories.pauto.processing;
 
-import eutros.jeiautos.helper.JeiHelper;
+import eutros.dynamistics.helper.JeiHelper;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;

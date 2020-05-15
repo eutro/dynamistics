@@ -1,9 +1,9 @@
-package eutros.jeiautos.jei.categories.pauto;
+package eutros.dynamistics.jei.categories.pauto;
 
-import eutros.jeiautos.helper.JeiHelper;
-import eutros.jeiautos.helper.ModIds;
-import eutros.jeiautos.jei.categories.pauto.processing.PackageRecipeProvider;
-import eutros.jeiautos.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
+import eutros.dynamistics.helper.JeiHelper;
+import eutros.dynamistics.helper.ModIds;
+import eutros.dynamistics.jei.categories.pauto.processing.PackageRecipeProvider;
+import eutros.dynamistics.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
@@ -38,7 +38,7 @@ import java.util.Optional;
 
 public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
 
-    public static final String UID = "jeiautos:encoder_processing";
+    public static final String UID = "dynamistics:encoder_processing";
     private static final int WIDTH = 172;
     private static final int HEIGHT = 195;
     private final IDrawable background;
@@ -73,7 +73,7 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
     @Nonnull
     @Override
     public String getTitle() {
-        return I18n.format("jeiautos.category.title.pauto.holder");
+        return I18n.format("dynamistics.category.title.pauto.holder");
     }
 
     @Nonnull

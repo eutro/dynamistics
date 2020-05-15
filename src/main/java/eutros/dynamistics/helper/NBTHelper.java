@@ -1,4 +1,4 @@
-package eutros.jeiautos.helper;
+package eutros.dynamistics.helper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

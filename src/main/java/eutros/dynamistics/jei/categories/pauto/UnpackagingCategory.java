@@ -1,8 +1,8 @@
-package eutros.jeiautos.jei.categories.pauto;
+package eutros.dynamistics.jei.categories.pauto;
 
-import eutros.jeiautos.helper.ModIds;
-import eutros.jeiautos.jei.SingletonRecipe;
-import eutros.jeiautos.helper.JeiHelper;
+import eutros.dynamistics.helper.ModIds;
+import eutros.dynamistics.jei.SingletonRecipe;
+import eutros.dynamistics.helper.JeiHelper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -30,7 +30,7 @@ import java.util.Objects;
 
 public class UnpackagingCategory implements IRecipeCategory<SingletonRecipe> {
 
-    public static final String UID = "jeiautos:unpackaging";
+    public static final String UID = "dynamistics:unpackaging";
     private static final int HEIGHT = 126;
     private static final int WIDTH = 146;
     protected static final int GRID_SIZE = 18;
@@ -71,7 +71,7 @@ public class UnpackagingCategory implements IRecipeCategory<SingletonRecipe> {
     @Nonnull
     @Override
     public String getTitle() {
-        return I18n.format("jeiautos.category.title.pauto.unpackage");
+        return I18n.format("dynamistics.category.title.pauto.unpackage");
     }
 
     @Nonnull

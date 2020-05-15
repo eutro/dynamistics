@@ -1,4 +1,4 @@
-package eutros.jeiautos.jei;
+package eutros.dynamistics.jei;
 
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;

@@ -1,8 +1,8 @@
-package eutros.jeiautos.jei.categories.pauto;
+package eutros.dynamistics.jei.categories.pauto;
 
-import eutros.jeiautos.jei.categories.pauto.processing.PackageRecipeProvider;
-import eutros.jeiautos.helper.JeiHelper;
-import eutros.jeiautos.helper.ModIds;
+import eutros.dynamistics.jei.categories.pauto.processing.PackageRecipeProvider;
+import eutros.dynamistics.helper.JeiHelper;
+import eutros.dynamistics.helper.ModIds;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -30,7 +30,7 @@ import java.util.Optional;
 
 public class PackageProcessCategory implements IRecipeCategory<PackageRecipeProvider> {
 
-    public static final String UID = "jeiautos:package_process";
+    public static final String UID = "dynamistics:package_process";
     public static final int HEIGHT = 98;
     public static final int WIDTH = 168;
     private final IDrawableStatic background;
@@ -64,7 +64,7 @@ public class PackageProcessCategory implements IRecipeCategory<PackageRecipeProv
     @Nonnull
     @Override
     public String getTitle() {
-        return I18n.format("jeiautos.category.title.pauto.process");
+        return I18n.format("dynamistics.category.title.pauto.process");
     }
 
     @Nonnull

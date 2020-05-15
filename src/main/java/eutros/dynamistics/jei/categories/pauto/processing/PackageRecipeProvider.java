@@ -1,7 +1,7 @@
-package eutros.jeiautos.jei.categories.pauto.processing;
+package eutros.dynamistics.jei.categories.pauto.processing;
 
-import eutros.jeiautos.JeiAutosJEIPlugin;
-import eutros.jeiautos.jei.categories.pauto.PackageProcessCategory;
+import eutros.dynamistics.DynamisticsJEIPlugin;
+import eutros.dynamistics.jei.categories.pauto.PackageProcessCategory;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -73,7 +73,7 @@ public abstract class PackageRecipeProvider implements IRecipeWrapper {
                 mouseY > REP_Y + REP_SIZE) return Collections.emptyList();
 
         return Arrays.asList(recipeInfo.getRecipeType().getLocalizedName(),
-                TextFormatting.GRAY + I18n.format("jeiautos.recipe.text.show_jei_categories"));
+                TextFormatting.GRAY + I18n.format("dynamistics.recipe.text.show_jei_categories"));
     }
 
     @Override
@@ -86,8 +86,8 @@ public abstract class PackageRecipeProvider implements IRecipeWrapper {
                 mouseY > REP_Y + REP_SIZE) return false;
 
         List<String> categories = recipeInfo.getRecipeType().getJEICategories();
-        if(JeiAutosJEIPlugin.runtime != null && !categories.isEmpty()) {
-            JeiAutosJEIPlugin.runtime.getRecipesGui().showCategories(categories);
+        if(DynamisticsJEIPlugin.runtime != null && !categories.isEmpty()) {
+            DynamisticsJEIPlugin.runtime.getRecipesGui().showCategories(categories);
             return true;
         }
 

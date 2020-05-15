@@ -1,4 +1,4 @@
-package eutros.jeiautos.jei.categories.pauto;
+package eutros.dynamistics.jei.categories.pauto;
 
 import mezz.jei.api.IJeiHelpers;
 import net.minecraft.client.resources.I18n;
@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 public class PackagingCategory extends UnpackagingCategory {
 
-    public static String UID = "jeiautos:packaging";
+    public static String UID = "dynamistics:packaging";
 
     public PackagingCategory(IJeiHelpers helpers) {
         super(helpers);
@@ -28,7 +28,7 @@ public class PackagingCategory extends UnpackagingCategory {
     @Nonnull
     @Override
     public String getTitle() {
-        return I18n.format("jeiautos.category.title.pauto.package");
+        return I18n.format("dynamistics.category.title.pauto.package");
     }
 
 }

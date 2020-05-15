@@ -1,6 +1,6 @@
-package eutros.jeiautos.jei.categories.pauto.processing;
+package eutros.dynamistics.jei.categories.pauto.processing;
 
-import eutros.jeiautos.helper.JeiHelper;
+import eutros.dynamistics.helper.JeiHelper;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -50,7 +50,7 @@ public class RecipeHolderProcessingRecipe extends PackageRecipeProvider {
     @Override
     public void drawInfo(@Nonnull Minecraft mc, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
         super.drawInfo(mc, recipeWidth, recipeHeight, mouseX, mouseY);
-        mc.fontRenderer.drawString(I18n.format("jeiautos.recipe.text.package_processing_extra", index + 1),
+        mc.fontRenderer.drawString(I18n.format("dynamistics.recipe.text.package_processing_extra", index + 1),
                 24, 2, 0xFF000000);
     }
 
