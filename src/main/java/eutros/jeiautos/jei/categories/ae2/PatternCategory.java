@@ -40,6 +40,7 @@ public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> 
     private final boolean crafting;
     private final boolean substitute;
     private final IDrawableStatic subs;
+    private final IDrawableStatic arrow;
     private int guiStartX;
     private int guiStartY;
 
@@ -64,6 +65,12 @@ public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> 
                 16);
 
         interfaceStack = new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModIds.AE2, "interface"))));
+
+        arrow = guiHelper.createDrawable(new ResourceLocation(ModIds.SELF, "textures/gui/arrows.png"),
+                64,
+                16,
+                32,
+                32);
 
         guiStartY = HEIGHT - craftingBackground.getHeight();
         guiStartX = (WIDTH - craftingBackground.getWidth()) / 2;
@@ -120,7 +127,7 @@ public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> 
         stacks.init(13, true, WIDTH / 2 - 8, 8);
         stacks.set(13, patternStack);
         stacks.setBackground(13, slot);
-        stacks.init(14, true, WIDTH / 2 - 8, 32);
+        stacks.init(14, true, WIDTH / 2 - 8, 29);
         stacks.set(14, interfaceStack);
 
         if(patternStack.hasTagCompound()) {
@@ -139,7 +146,7 @@ public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> 
             }
 
             int outStartX = 100;
-            if(crafting) {
+            if(crafting && !outputs.isEmpty()) {
                 stacks.init(9, false, guiStartX + outStartX, guiStartY + gridStartY + gridSize);
                 stacks.set(9, outputs.get(0));
             } else {
@@ -153,11 +160,15 @@ public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> 
 
     @Override
     public void drawExtras(@Nonnull Minecraft minecraft) {
+        arrow.draw(minecraft,
+                (WIDTH - arrow.getWidth()) / 2,
+                27);
         craftingBackground.draw(minecraft, guiStartX, guiStartY);
+
         if(crafting) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(guiStartX, guiStartY, 0);
-            double sf = 1 / 2.0;
+            double sf = 0.5;
             GlStateManager.scale(sf, sf, sf);
             subs.draw(minecraft);
             GlStateManager.popMatrix();
