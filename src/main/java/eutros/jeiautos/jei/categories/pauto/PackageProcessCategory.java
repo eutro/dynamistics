@@ -31,8 +31,8 @@ import java.util.Optional;
 public class PackageProcessCategory implements IRecipeCategory<PackageRecipeProvider> {
 
     public static final String UID = "jeiautos:package_process";
-    private static final int HEIGHT = 98;
-    private static final int WIDTH = 168;
+    public static final int HEIGHT = 98;
+    public static final int WIDTH = 168;
     private final IDrawableStatic background;
     private final IDrawableStatic slot;
     private final IDrawable icon;

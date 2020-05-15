@@ -1,6 +1,5 @@
 package eutros.jeiautos.jei.categories.pauto;
 
-import eutros.jeiautos.JeiAutosJEIPlugin;
 import eutros.jeiautos.helper.JeiHelper;
 import eutros.jeiautos.helper.ModIds;
 import eutros.jeiautos.jei.categories.pauto.processing.PackageRecipeProvider;
@@ -23,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import thelm.packagedauto.api.IRecipeInfo;
@@ -33,8 +31,10 @@ import thelm.packagedauto.api.RecipeTypeRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.*;
+import java.util.Objects;
+import java.util.Optional;
 
 public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
 
@@ -129,7 +129,7 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
                 output.set(i, outputs.get(i));
             }
 
-            for(int i = 0; i < 90; i++) {
+            for(int i = 0; i < 81; i++) {
                 bgList.set(i, new ColouredSlot(slot, type.getSlotColor(i)));
             }
         }
@@ -193,13 +193,13 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
 
     public static class PackageRecipe extends PackageRecipeProvider {
 
-        public static final int REP_SIZE = 8;
-        public static final int REP_Y = HEIGHT - REP_SIZE;
-        public static final int REP_X = WIDTH - GRID_START_X - REP_SIZE;
         protected final ItemStack stack;
 
         public PackageRecipe(Item item) {
             stack = new ItemStack(item);
+            REP_SIZE = 8;
+            REP_Y = HEIGHT - REP_SIZE;
+            REP_X = WIDTH - GRID_START_X - REP_SIZE;
         }
 
         @Nonnull
@@ -228,37 +228,6 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
             GlStateManager.scale(0.5, 0.5, 0.5);
             drawRep(minecraft, recipeType);
             GlStateManager.popMatrix();
-        }
-
-        @Nonnull
-        @Override
-        public List<String> getTooltipStrings(int mouseX, int mouseY) {
-            if(recipeInfo == null ||
-                    mouseX < REP_X ||
-                    mouseY < REP_Y ||
-                    mouseX > REP_X + REP_SIZE ||
-                    mouseY > REP_Y + REP_SIZE) return Collections.emptyList();
-
-            return Arrays.asList(recipeInfo.getRecipeType().getLocalizedName(),
-                    TextFormatting.ITALIC + I18n.format("jeiautos.recipe.text.show_jei_categories"));
-        }
-
-        @Override
-        public boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton) {
-            if(recipeInfo == null ||
-                    (mouseButton != 1 && mouseButton != 2) ||
-                    mouseX < REP_X ||
-                    mouseY < REP_Y ||
-                    mouseX > REP_X + REP_SIZE ||
-                    mouseY > REP_Y + REP_SIZE) return false;
-
-            List<String> categories = recipeInfo.getRecipeType().getJEICategories();
-            if(JeiAutosJEIPlugin.runtime != null && !categories.isEmpty()) {
-                JeiAutosJEIPlugin.runtime.getRecipesGui().showCategories(categories);
-                return true;
-            }
-
-            return false;
         }
 
     }
