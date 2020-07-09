@@ -1,5 +1,6 @@
 package eutros.dynamistics;
 
+import eutros.dynamistics.helper.JeiHelper;
 import eutros.dynamistics.helper.ModIds;
 import eutros.dynamistics.jei.SingletonRecipe;
 import eutros.dynamistics.jei.categories.ae2.PatternCategory;
@@ -32,6 +33,7 @@ public class DynamisticsJEIPlugin implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         IJeiHelpers helpers = registry.getJeiHelpers();
+        JeiHelper.makeSlotDrawable(helpers.getGuiHelper());
 
         if(Loader.isModLoaded(ModIds.AE2)) {
             for(byte b : new byte[] {0, 1, 2}) {

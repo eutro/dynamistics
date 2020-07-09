@@ -55,7 +55,7 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
 
         background = guiHelper.createBlankDrawable(WIDTH, HEIGHT);
         icon = guiHelper.createDrawableIngredient(new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModIds.PAUTO, "recipe_holder")))));
-        slot = guiHelper.getSlotDrawable();
+        slot = JeiHelper.getSlotDrawable();
 
         arrow = guiHelper.createDrawable(new ResourceLocation(ModIds.SELF, "textures/gui/arrows.png"),
                 64,

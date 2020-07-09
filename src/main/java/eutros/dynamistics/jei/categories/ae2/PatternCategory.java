@@ -49,7 +49,7 @@ public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> 
         this.substitute = substitute;
         IGuiHelper guiHelper = helpers.getGuiHelper();
 
-        slot = guiHelper.getSlotDrawable();
+        slot = JeiHelper.getSlotDrawable();
         craftingBackground = guiHelper.createDrawable(
                 new ResourceLocation(ModIds.AE2, "textures/guis/pattern" + (crafting ? "" : "2") + ".png"),
                 9,

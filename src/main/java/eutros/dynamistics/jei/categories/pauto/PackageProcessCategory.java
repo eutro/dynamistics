@@ -44,7 +44,7 @@ public class PackageProcessCategory implements IRecipeCategory<PackageRecipeProv
 
         recipePackage = Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModIds.PAUTO, "package")));
 
-        slot = guiHelper.getSlotDrawable();
+        slot = JeiHelper.getSlotDrawable();
         background = guiHelper.createBlankDrawable(WIDTH, HEIGHT);
         icon = guiHelper.createDrawableIngredient(new ItemStack(recipePackage));
 

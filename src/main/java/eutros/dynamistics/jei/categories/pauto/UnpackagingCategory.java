@@ -43,7 +43,7 @@ public class UnpackagingCategory implements IRecipeCategory<SingletonRecipe> {
     public UnpackagingCategory(IJeiHelpers helpers) {
         IGuiHelper guiHelper = helpers.getGuiHelper();
 
-        slot = guiHelper.getSlotDrawable();
+        slot = JeiHelper.getSlotDrawable();
         background = guiHelper.createBlankDrawable(WIDTH, HEIGHT);
         icon = guiHelper.createDrawableIngredient(new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModIds.PAUTO, (isUnpackaging() ? "un" : "") + "packager")))));
         gridStartY = HEIGHT - (int) (3.5 * GRID_SIZE);
