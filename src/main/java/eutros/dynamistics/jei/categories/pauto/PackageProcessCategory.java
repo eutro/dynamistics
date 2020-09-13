@@ -1,8 +1,11 @@
 package eutros.dynamistics.jei.categories.pauto;
 
-import eutros.dynamistics.jei.categories.pauto.processing.PackageRecipeProvider;
+import eutros.dynamistics.helper.ItemHelper;
 import eutros.dynamistics.helper.JeiHelper;
 import eutros.dynamistics.helper.ModIds;
+import eutros.dynamistics.jei.categories.pauto.processing.PackageProcessingRecipe;
+import eutros.dynamistics.jei.categories.pauto.processing.PackageRecipeProvider;
+import eutros.dynamistics.jei.categories.pauto.processing.RecipeHolderProcessingRecipe;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -11,7 +14,6 @@ import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
-import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
@@ -20,15 +22,20 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import thelm.packagedauto.api.*;
+import thelm.packagedauto.api.IPackagePattern;
+import thelm.packagedauto.api.IRecipeInfo;
+import thelm.packagedauto.api.IRecipeType;
+import thelm.packagedauto.api.RecipeTypeRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class PackageProcessCategory implements IRecipeCategory<PackageRecipeProvider> {
+public class PackageProcessCategory implements IWrapperSupplier<PackageRecipeProvider> {
 
     public static final String UID = "dynamistics:package_process";
     public static final int HEIGHT = 98;
@@ -95,13 +102,12 @@ public class PackageProcessCategory implements IRecipeCategory<PackageRecipeProv
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, PackageRecipeProvider recipeWrapper, IIngredients ingredients) {
         IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
-        NBTTagCompound nbt = recipeWrapper.getPackageNBT(stacks);
+        NBTTagCompound nbt = recipeWrapper.getPackageNBT();
 
         ItemStack input = ingredients.getInputs(VanillaTypes.ITEM).get(0).get(0);
 
         if(input.getItem() != recipePackage) {
-            input = Optional.ofNullable(JeiHelper.getFocusedStack(input.getItem(), stacks)).orElse(input).copy();
-            input.setCount(1);
+            input = recipeWrapper.stack;
 
             stacks.init(20, true, 2, 2);
             stacks.set(20, input);
@@ -148,6 +154,22 @@ public class PackageProcessCategory implements IRecipeCategory<PackageRecipeProv
             stacks.set(9 + i, outputs.get(i));
             stacks.setBackground(9 + i, slot);
         }
+    }
+
+    @Nonnull
+    @Override
+    public List<PackageRecipeProvider> makeWrappers(ItemStack stack) {
+        return stack.getItem() == ItemHelper.PAuto.HOLDER ?
+               IntStream.range(0, 20)
+                .mapToObj(i -> new RecipeHolderProcessingRecipe(stack, i))
+                .collect(Collectors.toList()) :
+               Collections.singletonList(new PackageProcessingRecipe(stack));
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack getFallbackStack() {
+        return ItemHelper.PAuto.EXAMPLE_PACKAGE;
     }
 
 }

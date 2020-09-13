@@ -1,8 +1,9 @@
 package eutros.dynamistics.jei.categories.pauto;
 
+import eutros.dynamistics.helper.ItemHelper;
+import eutros.dynamistics.helper.JeiHelper;
 import eutros.dynamistics.helper.ModIds;
 import eutros.dynamistics.jei.SingletonRecipe;
-import eutros.dynamistics.helper.JeiHelper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -10,7 +11,6 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -25,10 +25,11 @@ import thelm.packagedauto.api.RecipeTypeRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class UnpackagingCategory implements IRecipeCategory<SingletonRecipe> {
+public class UnpackagingCategory implements IWrapperSupplier<SingletonRecipe> {
 
     public static final String UID = "dynamistics:unpackaging";
     private static final int HEIGHT = 126;
@@ -95,14 +96,7 @@ public class UnpackagingCategory implements IRecipeCategory<SingletonRecipe> {
     public void setRecipe(IRecipeLayout recipeLayout, @Nonnull SingletonRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
 
-        ItemStack packageStack = JeiHelper.getFocusedStack(recipeWrapper.stack.getItem(), stacks);
-
-        if(packageStack == null) {
-            packageStack = recipeWrapper.stack;
-        }
-
-        packageStack = packageStack.copy();
-        packageStack.setCount(1);
+        ItemStack packageStack = recipeWrapper.stack;
 
         stacks.init(10, isUnpackaging(), WIDTH / 2 - 8, isUnpackaging() ? 8 : HEIGHT - 8 - 16);
         stacks.set(10, packageStack);
@@ -144,6 +138,18 @@ public class UnpackagingCategory implements IRecipeCategory<SingletonRecipe> {
 
     protected boolean isUnpackaging() {
         return true;
+    }
+
+    @Nonnull
+    @Override
+    public List<SingletonRecipe> makeWrappers(ItemStack stack) {
+        return Collections.singletonList(new SingletonRecipe(stack, isUnpackaging()));
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack getFallbackStack() {
+        return ItemHelper.PAuto.EXAMPLE_PACKAGE;
     }
 
 }

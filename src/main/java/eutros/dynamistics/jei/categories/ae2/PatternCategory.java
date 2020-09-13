@@ -1,8 +1,9 @@
 package eutros.dynamistics.jei.categories.ae2;
 
+import eutros.dynamistics.helper.JeiHelper;
 import eutros.dynamistics.helper.ModIds;
 import eutros.dynamistics.helper.NBTHelper;
-import eutros.dynamistics.helper.JeiHelper;
+import eutros.dynamistics.jei.SingletonRecipe;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -12,11 +13,9 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
@@ -27,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> {
+public class PatternCategory implements IRecipeCategory<SingletonRecipe> {
 
     public static final String UID = "dynamistics:process_pattern_";
     private static final int HEIGHT = 126;
@@ -115,10 +114,10 @@ public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> 
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, @Nonnull Recipe recipeWrapper, @Nonnull IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, @Nonnull SingletonRecipe recipe, @Nonnull IIngredients ingredients) {
         IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
 
-        ItemStack patternStack = JeiHelper.getFocusedStack(recipeWrapper.stack.getItem(), stacks);
+        ItemStack patternStack = recipe.stack;
 
         if(patternStack == null) {
             patternStack = ingredients.getInputs(VanillaTypes.ITEM).get(0).get(0);
@@ -173,25 +172,6 @@ public class PatternCategory implements IRecipeCategory<PatternCategory.Recipe> 
             subs.draw(minecraft);
             GlStateManager.popMatrix();
         }
-    }
-
-    public static class Recipe implements IRecipeWrapper {
-
-        private final ItemStack stack;
-
-        public Recipe(Item item, boolean crafting, boolean substitute) {
-            stack = new ItemStack(item);
-            NBTTagCompound cmp = new NBTTagCompound();
-            cmp.setBoolean("crafting", crafting);
-            cmp.setBoolean("substitute", substitute);
-            stack.setTagCompound(cmp);
-        }
-
-        @Override
-        public void getIngredients(IIngredients ingredients) {
-            ingredients.setInput(VanillaTypes.ITEM, stack);
-        }
-
     }
 
 }

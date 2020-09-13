@@ -3,7 +3,6 @@ package eutros.dynamistics.jei;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -13,8 +12,8 @@ public class SingletonRecipe implements IRecipeWrapper {
     public final ItemStack stack;
     private boolean input;
 
-    public SingletonRecipe(Item item, boolean input) {
-        stack = new ItemStack(item);
+    public SingletonRecipe(ItemStack stack, boolean input) {
+        this.stack = stack;
         this.input = input;
     }
 
@@ -24,6 +23,11 @@ public class SingletonRecipe implements IRecipeWrapper {
             ingredients.setInput(VanillaTypes.ITEM, stack);
         else
             ingredients.setOutput(VanillaTypes.ITEM, stack);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T cast() {
+        return (T) this;
     }
 
 }

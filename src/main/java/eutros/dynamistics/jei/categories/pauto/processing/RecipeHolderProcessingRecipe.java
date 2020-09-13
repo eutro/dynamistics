@@ -1,12 +1,7 @@
 package eutros.dynamistics.jei.categories.pauto.processing;
 
-import eutros.dynamistics.helper.JeiHelper;
-import mezz.jei.api.gui.IGuiItemStackGroup;
-import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -16,21 +11,19 @@ import javax.annotation.Nonnull;
 public class RecipeHolderProcessingRecipe extends PackageRecipeProvider {
 
     private final int index;
-    private final ItemStack stack;
 
-    public RecipeHolderProcessingRecipe(Item item, int index) {
-        this.stack = new ItemStack(item);
+    public RecipeHolderProcessingRecipe(ItemStack stack, int index) {
+        super(stack);
         this.index = index;
     }
 
     @Nonnull
     @Override
-    public NBTTagCompound getPackageNBT(IGuiItemStackGroup group) {
-        return getNBT(group, stack.getItem(), index);
+    public NBTTagCompound getPackageNBT() {
+        return getNBT(stack, index);
     }
 
-    public static NBTTagCompound getNBT(IGuiItemStackGroup group, Item item, int index) {
-        ItemStack stack = JeiHelper.getFocusedStack(item, group);
+    public static NBTTagCompound getNBT(ItemStack stack, int index) {
         if(stack != null && stack.hasTagCompound()) {
             NBTTagCompound tag = stack.getTagCompound();
             if(tag == null) return new NBTTagCompound();
@@ -39,12 +32,6 @@ public class RecipeHolderProcessingRecipe extends PackageRecipeProvider {
             return recipes.getCompoundTagAt(index);
         }
         return new NBTTagCompound();
-    }
-
-    @Override
-    public void getIngredients(@Nonnull IIngredients ingredients) {
-        super.getIngredients(ingredients);
-        ingredients.setInput(VanillaTypes.ITEM, stack);
     }
 
     @Override

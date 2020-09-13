@@ -1,5 +1,6 @@
 package eutros.dynamistics.jei.categories.pauto;
 
+import eutros.dynamistics.helper.ItemHelper;
 import eutros.dynamistics.helper.JeiHelper;
 import eutros.dynamistics.helper.ModIds;
 import eutros.dynamistics.jei.categories.pauto.processing.PackageRecipeProvider;
@@ -12,12 +13,9 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.ingredients.VanillaTypes;
-import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
@@ -32,11 +30,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
+public class HolderCategory implements IWrapperSupplier<PackageRecipeProvider> {
 
     public static final String UID = "dynamistics:encoder_processing";
     private static final int WIDTH = 172;
@@ -108,7 +108,7 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
 
         recipeType:
         {
-            NBTTagCompound tag = recipeWrapper.getPackageNBT(stacks);
+            NBTTagCompound tag = recipeWrapper.getPackageNBT();
 
             IRecipeType type = RecipeTypeRegistry.getRecipeType(new ResourceLocation(tag.getString("RecipeType")));
             if(type == null) break recipeType;
@@ -153,6 +153,22 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
         return icon;
     }
 
+    @Override
+    @Nonnull
+    public List<PackageRecipeProvider> makeWrappers(ItemStack stack) {
+        return stack.getItem() == ItemHelper.PAuto.HOLDER ?
+               IntStream.range(0, 20)
+                       .mapToObj(i -> new HolderCategory.HolderRecipe(stack, i))
+                       .collect(Collectors.toList()) :
+               Collections.singletonList(new PackageRecipe(stack));
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack getFallbackStack() {
+        return ItemHelper.PAuto.EXAMPLE_PACKAGE;
+    }
+
     public static class ColouredSlot implements IDrawable {
 
         private IDrawable delegate;
@@ -193,10 +209,8 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
 
     public static class PackageRecipe extends PackageRecipeProvider {
 
-        protected final ItemStack stack;
-
-        public PackageRecipe(Item item) {
-            stack = new ItemStack(item);
+        public PackageRecipe(ItemStack stack) {
+            super(stack);
             REP_SIZE = 8;
             REP_Y = HEIGHT - REP_SIZE;
             REP_X = WIDTH - GRID_START_X - REP_SIZE;
@@ -204,17 +218,8 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
 
         @Nonnull
         @Override
-        public NBTTagCompound getPackageNBT(IGuiItemStackGroup group) {
-            return Optional.ofNullable(JeiHelper.getFocusedStack(stack.getItem(), group))
-                    .filter(ItemStack::hasTagCompound)
-                    .map(ItemStack::getTagCompound)
-                    .orElseGet(NBTTagCompound::new);
-        }
-
-        @Override
-        public void getIngredients(@Nonnull IIngredients ingredients) {
-            super.getIngredients(ingredients);
-            ingredients.setInput(VanillaTypes.ITEM, stack);
+        public NBTTagCompound getPackageNBT() {
+            return stack.getTagCompound() == null ? new NBTTagCompound() : stack.getTagCompound();
         }
 
         @Override
@@ -236,15 +241,15 @@ public class HolderCategory implements IRecipeCategory<PackageRecipeProvider> {
 
         private final int index;
 
-        public HolderRecipe(Item item, int index) {
-            super(item);
+        public HolderRecipe(ItemStack stack, int index) {
+            super(stack);
             this.index = index;
         }
 
         @Nonnull
         @Override
-        public NBTTagCompound getPackageNBT(IGuiItemStackGroup group) {
-            return RecipeHolderProcessingRecipe.getNBT(group, stack.getItem(), index);
+        public NBTTagCompound getPackageNBT() {
+            return RecipeHolderProcessingRecipe.getNBT(stack, index);
         }
 
     }

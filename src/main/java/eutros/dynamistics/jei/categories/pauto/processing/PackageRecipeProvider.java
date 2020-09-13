@@ -1,10 +1,9 @@
 package eutros.dynamistics.jei.categories.pauto.processing;
 
 import eutros.dynamistics.DynamisticsJEIPlugin;
+import eutros.dynamistics.jei.SingletonRecipe;
 import eutros.dynamistics.jei.categories.pauto.PackageProcessCategory;
-import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -25,15 +24,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class PackageRecipeProvider implements IRecipeWrapper {
+public abstract class PackageRecipeProvider extends SingletonRecipe {
 
     public int REP_SIZE = 32;
     public int REP_X = (PackageProcessCategory.WIDTH - REP_SIZE) / 2;
     public int REP_Y = (PackageProcessCategory.HEIGHT - REP_SIZE) / 2;
     protected IRecipeInfo recipeInfo = null;
 
+    public PackageRecipeProvider(ItemStack stack) {
+        super(stack, true);
+    }
+
     @Nonnull
-    public abstract NBTTagCompound getPackageNBT(IGuiItemStackGroup group);
+    public abstract NBTTagCompound getPackageNBT();
 
     public void setInfo(IRecipeInfo recipeInfo) {
         this.recipeInfo = recipeInfo;
@@ -41,6 +44,7 @@ public abstract class PackageRecipeProvider implements IRecipeWrapper {
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
+        super.getIngredients(ingredients);
         recipeInfo = null;
     }
 
